@@ -7,6 +7,7 @@ import cors from 'cors';
 // import { User } from "../types/user";
 import { UserServiceClient } from "./UserServiceClient";
 import { RoomServiceClient } from "./RoomServiceClient";
+import { KafkaServer } from "./KafkaServer";
 
 
 export class ChatService {
@@ -17,6 +18,7 @@ export class ChatService {
     private port: string | number;
     private userClient: UserServiceClient;
     private roomClient: RoomServiceClient;
+    private kafka: KafkaServer;
 
     constructor(){
         this._app = express();
@@ -34,12 +36,15 @@ export class ChatService {
 
         this.userClient = new UserServiceClient();
         this.roomClient = new RoomServiceClient();
+        this.kafka = new KafkaServer({});
     }
 
     
 
     async listen (): Promise<void> {
+        await this.kafka.connect();
         await this.server.listen(this.port);
+        console.log(`Server running on port: ${this.port}. `);
         // TODO: write chat events.
 
     }
