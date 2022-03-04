@@ -11,7 +11,7 @@ import { KafkaServer } from "./KafkaServer";
 
 
 export class ChatService {
-    public static readonly PORT: number = 8000;
+    public static readonly PORT: number = 5080;
     private _app: express.Application;
     private server: Server;
     private io: SocketIOServer;
